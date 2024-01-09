@@ -24,7 +24,6 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-console.log(entry)
 const { Content } = await entry.render();
 ---
 
@@ -45,11 +44,11 @@ const { Content } = await entry.render();
 				</div>
 			</header>
 			<main class="wrapper">
-				<div class="stack gap-10 content">
-					{entry.data.img && <img src={entry.data.img} alt={entry.data.img_alt || ''} />}
+				<div class="row gap-10">
 					<div class="content">
 						<Content />
 					</div>
+					{entry.data.img && <img src={entry.data.img} alt={entry.data.img_alt || ''} class="image" />}
 				</div>
 			</main>
 		</div>
@@ -61,6 +60,26 @@ const { Content } = await entry.render();
 	header {
 		padding-bottom: 2.5rem;
 		border-bottom: 1px solid var(--gray-800);
+	}
+
+	.image {
+		max-height: 20rem;
+		max-width: 20rem;
+		object-fit: cover;
+
+		@media (max-width: 50em) {
+			margin: 0 auto;
+			max-height: 5rem;
+			max-width: 5rem;
+		}
+	}
+
+	.row {
+		display: flex;
+		flex-direction: column-reverse;
+		@media (min-width: 50em) {
+			flex-direction: row;
+		}
 	}
 
 	.back-link {
